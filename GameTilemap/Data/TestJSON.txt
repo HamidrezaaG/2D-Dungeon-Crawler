@@ -1,0 +1,7 @@
+{
+
+	"Testint": 5,
+	"testString": "Hello",
+	"testarray" :  [ 1, 1, 67 ]
+
+}
