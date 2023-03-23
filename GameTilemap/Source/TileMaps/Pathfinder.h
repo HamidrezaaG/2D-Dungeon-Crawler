@@ -1,5 +1,4 @@
-#ifndef __PathFinder_H__
-#define __PathFinder_H__
+#pragma once
 
 class TileMap;
 
@@ -60,4 +59,3 @@ public:
     int GetPath(int* path, int maxdistance, int ex, int ey);
 };
 
-#endif //__PathFinder_H__

@@ -131,7 +131,7 @@ void Game::Init()
 
     // SHADE
     {
-        AddObject(Vector2(2, 5), 0.8f, m_pTextures["Shade"], m_pSpriteSheets["Shade"], nullptr, fw::k_ObjectType::Enemy, "Slim Shade-y");
+        AddObject(Vector2(2, 6), 0.8f, m_pTextures["Shade"], m_pSpriteSheets["Shade"], nullptr, fw::k_ObjectType::Enemy, "Slim Shade-y");
         AddObject(Vector2(15, 6), 0.8f, m_pTextures["Shade"], m_pSpriteSheets["Shade"], nullptr, fw::k_ObjectType::Enemy, "Slim Shade-y");
         AddObject(Vector2(20, 2), 0.8f, m_pTextures["Shade"], m_pSpriteSheets["Shade"], nullptr, fw::k_ObjectType::Enemy, "Slim Shade-y");
     }
@@ -180,6 +180,8 @@ void Game::Update(float deltaTime)
 
 void Game::SetCameraPosition(fw::Vector2 targetPosition, float deltaTime)
 {
+    float zoomcalc = fw::Math::Lerp(m_pActiveCamera->GetZoom(), m_CameraZoom, deltaTime * k_Camera_ZoomSpeed);
+    m_pActiveCamera->SetZoom(zoomcalc);
     Vector2 v = m_pActiveCamera->GetCorrectedPosition();
 
     Vector2 finv = targetPosition;
@@ -189,9 +191,7 @@ void Game::SetCameraPosition(fw::Vector2 targetPosition, float deltaTime)
 
     m_pActiveCamera->SetCorrectedPosition(finv);
     
-    float zoomcalc = fw::Math::Lerp(m_pActiveCamera->GetZoom(), m_CameraZoom, deltaTime * k_Camera_ZoomSpeed);
 
-    m_pActiveCamera->SetZoom(zoomcalc);
 }
 
 void Game::CheckCollisions()
