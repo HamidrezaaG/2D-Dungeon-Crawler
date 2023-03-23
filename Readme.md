@@ -10,6 +10,7 @@
 	<li>Shades have 3 health by default, and the player has 5.</li>
 </ul>
 
+<p><a href=https://www.youtube.com/watch?v=AlJqBda12tc>Here's some footage of the prototype in action.</a></p>
 
 <h2><strong>FEATURES</strong></h2>
 
