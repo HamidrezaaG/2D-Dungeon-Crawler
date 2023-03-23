@@ -8,9 +8,10 @@
 <ul>
 	<li>Use WASD to move and Space to attack.</li>
 	<li>Shades have 3 health by default, and the player has 5.</li>
+	<br>
 </ul>
 
-<p><a href=https://www.youtube.com/watch?v=AlJqBda12tc>Here's some footage of the prototype in action.</a></p>
+<div align="center"><a href="http://www.youtube.com/watch?v=AlJqBda12tc"><img src="https://drive.google.com/uc?export=view&id=1FUNKGmx2TZT8PgescX1WkVNvwU9uXMHm" width="50%"><img></a></div>
 
 <h2><strong>FEATURES</strong></h2>
 
