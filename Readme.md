@@ -11,7 +11,12 @@
 	<br>
 </ul>
 
-<div align="center"><a href="http://www.youtube.com/watch?v=AlJqBda12tc"><img src="https://drive.google.com/uc?export=view&id=1FUNKGmx2TZT8PgescX1WkVNvwU9uXMHm" width="75%"><img></a></div>
+
+<br><div align="center">
+<a href="http://www.youtube.com/watch?v=AlJqBda12tc" target="_blank" rel="noopener noreferrer" >
+<img src="https://drive.google.com/uc?export=view&id=1FUNKGmx2TZT8PgescX1WkVNvwU9uXMHm" width="75%"><img>
+</a>
+<br>Here's a short video demo.</div><br>
 
 <h2><strong>FEATURES</strong></h2>
 
