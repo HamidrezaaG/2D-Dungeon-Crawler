@@ -1,3 +1,4 @@
+
 <h2><strong>ABOUT</strong></h2>
 
 <p>A small 2D dungeon crawling prototype in an OpenGL framework.</p>
@@ -8,6 +9,7 @@
 	<li>Use WASD to move and Space to attack.</li>
 	<li>Shades have 3 health by default, and the player has 5.</li>
 </ul>
+
 
 <h2><strong>FEATURES</strong></h2>
 
