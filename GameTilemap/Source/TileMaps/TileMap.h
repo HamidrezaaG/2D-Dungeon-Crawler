@@ -86,7 +86,6 @@ private:
 	fw::Texture* m_pTexture;
 
 	Vector2 m_Scale = Vector2::One();
-	Vector2 m_ScaleAdjustment = Vector2::One();
 	Vector2 m_Offset = Vector2::Zero();
 
 	unsigned char Mask_Wall_Top		= 1 << 0;

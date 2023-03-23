@@ -14,12 +14,9 @@
 
 #include "Actors/LevelElements/Movable.h"
 
-//#include "Actors/Enemies/TestEnemy.h"
-
 Game::Game(fw::FWCore* fwp): GameCore(fwp), m_MapRoot(), m_pPathfinder()
 {
     wglSwapInterval(m_VSyncEnabled ? 1 : 0);
-
 }
 
 Game::~Game()
@@ -62,14 +59,11 @@ Game::~Game()
     delete m_pPathfinder;
     delete m_TileMap;
     delete m_pActiveCamera;
-//    m_pEventManager->AddEvent();
 }
 
 void Game::Init()
 {
-    // Init
     {
-        //ShowCursor(false);wwww
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -82,6 +76,7 @@ void Game::Init()
         m_pActiveCamera = new fw::Camera(Vector2(-2.6f, -1.f), Vector2(fw::k_World_Scale), 1.f);
         m_MapRoot = new fw::GameObject(nullptr, "MapRoot", nullptr, this);
     }
+
     // Loading Shaders
     {
         m_pShaders["Basic"] = new fw::ShaderProgram("Data/Shaders/Basic.vert", "Data/Shaders/Basic.frag");
@@ -93,10 +88,7 @@ void Game::Init()
         m_pMeshes["SpriteMesh"] = new fw::Mesh();
         m_pMeshes["SpriteMesh"]->MakeRect(Vector2(0.5,0.3f), 2, 2, true);
         m_pMeshes["TileSprite"] = new fw::Mesh();
-        m_pMeshes["TileSprite"]->MakeRect(Vector2(0.f), 32.0f * fw::k_World_Scale / fw::k_Window_Dimensions.x, 32.0f * fw::k_World_Scale / fw::k_Window_Dimensions.y, true);
-        //m_pMeshes["Circle"] = new fw::Mesh();
-        //m_pMeshes["Circle"]->MakeCircle(1,10,false);
-
+        m_pMeshes["TileSprite"]->MakeRect(Vector2(0.f), 1, 1, true);
     }
 
     // Loading Textures
@@ -119,13 +111,13 @@ void Game::Init()
         m_TileMap = new TileMap(m_pMeshes["TileSprite"], m_pActiveCamera, m_pShaders["Texture"], k_LayoutOffset, this);
         m_TileMap->SetSpriteSheet(m_pSpriteSheets["Map"]);
         m_TileMap->SetTexture(m_pTextures["Map"]);
-        m_TileMap->SetScale(Vector2(2));
+        m_TileMap->SetScale(Vector2(1));
         m_TileMap->LoadLayout(&k_Layout_1);
     }
 
     // PLAYER
     {
-        m_pPlayer = new Player(IVector2(2, 4), m_pMeshes["SpriteMesh"], "Player", m_pShaders["Texture"], m_pPlayerController, this);
+        m_pPlayer = new Player(m_TileMap->ToWorldSpace(IVector2(3, 3)), m_pMeshes["SpriteMesh"], "Player", m_pShaders["Texture"], m_pPlayerController, this);
         m_pPlayer->SetTexture(m_pTextures["Player"]);
         m_pPlayer->SetSpriteSheet(m_pSpriteSheets["Player"]);
         m_pPlayer->SetScale(Vector2(1.0f));
@@ -134,16 +126,7 @@ void Game::Init()
 
     // misc
     {
-        fw::GameObject* bun = new fw::GameObject(Vector2(5) + k_LayoutOffset, m_pMeshes["SpriteMesh"], "Bun", m_pShaders["Texture"], this);
-        bun->SetTexture(m_pTextures["Bun"]);
-        bun->SetScale(0.5f);
-        m_GameObjects.push_back(bun);
         m_pPathfinder = new Pathfinder(m_TileMap);
-
-        //fw::GameObject* m_ppEnemy;
-        //m_ppEnemy = new TestEnemy(Vector2(3,3), m_pMeshes["rekt"], "testenemy", m_pShaders["Basic"], m_pPlayer, this);
-        //m_ppEnemy->SetColor(Color::Green());
-        //m_GameObjects.push_back(m_ppEnemy);
     }
 
     // SHADE
@@ -154,7 +137,6 @@ void Game::Init()
     }
 
     m_pEventManager->AddEvent(new ResetGameEvent());
-
     m_pActiveCamera->SetCorrectedPosition(m_pPlayer->GetPosition());
 }
 
@@ -200,28 +182,20 @@ void Game::SetCameraPosition(fw::Vector2 targetPosition, float deltaTime)
 {
     Vector2 v = m_pActiveCamera->GetCorrectedPosition();
 
-    //ImGui::Text("%f", v.SqrDistanceFrom(targetPosition));
-
-    //if (v.SqrDistanceFrom(targetPosition) < 0.5f)
-    //    return;
-
     Vector2 finv = targetPosition;
-
-    finv.x = round(finv.x * fw::PositionRoundingFactor.x) / fw::PositionRoundingFactor.x ;
-    finv.y = round(finv.y * fw::PositionRoundingFactor.y) / fw::PositionRoundingFactor.y ;
+    
+    finv.x = (float)round(finv.x * fw::PositionRoundingFactor.x) / fw::PositionRoundingFactor.x ;
+    finv.y = (float)round(finv.y * fw::PositionRoundingFactor.y) / fw::PositionRoundingFactor.y ;
 
     m_pActiveCamera->SetCorrectedPosition(finv);
     
     float zoomcalc = fw::Math::Lerp(m_pActiveCamera->GetZoom(), m_CameraZoom, deltaTime * k_Camera_ZoomSpeed);
-    //finv.x = round(zoomcalc.x * fw::k_Window_Dimensions.x) / fw::k_Window_Dimensions.x;
-    //finv.y = round(zoomcalc.y * fw::k_Window_Dimensions.y) / fw::k_Window_Dimensions.y;
 
     m_pActiveCamera->SetZoom(zoomcalc);
 }
 
 void Game::CheckCollisions()
 {
-    
     // GAMEOBJECT - GAMEOBJECT COLLISIONS
     for (unsigned int i = 0; i < m_GameObjects.size(); i++)
     {
@@ -440,25 +414,6 @@ fw::ShaderProgram* Game::GetDebugShader()
 
 void Game::OnImGUI()
 {
-    ImGui::Begin("Hey Jimmy!");
-    ImGui::Separator();
-    ImGui::TextWrapped("Collisions");
-    ImGui::Separator();
-    ImGui::TextWrapped(" - Added a first-pass AABB/Circle collision logic. not ideal, not finished, missing a lot, but enough for this game to function in its current state.\n\n - There's some rudimentary optimization in place but it definitely isn't enough.\n\n - You can have the colliders in the scene be rendered onscreen by changing the last const bool in FWConsts.h\n");
-    ImGui::Separator();
-    ImGui::TextWrapped("Dynamic Objects");
-    ImGui::Separator();
-    ImGui::TextWrapped(" - The map loader can spawn in boxes that can be pushed around based on the tiles it reads. It can be extended to loading enemies by tiles too.\n");
-    ImGui::Separator();
-    ImGui::TextWrapped("AI");
-    ImGui::Separator();
-    ImGui::TextWrapped(" - Can now damage and be hurt by the player, handled through events.\n\n - Getting hurt changes either party's velocity so they get pushed back.\n\n - Their status is displayed at the bottom left. I like how dynamic and easy it is to use.\n");
-    ImGui::Separator();
-    ImGui::TextWrapped("Misc.");
-    ImGui::Separator();
-    ImGui::TextWrapped(" - Fixed warnings and odd function naming in Tilemap.\n");
-    ImGui::End();
-
     ImGui::Begin("Controls");
     ImGui::TextWrapped("WASD to move\nSpace to attack the shades.\nShades have 3 health.\nYou have 5 health.");
     ImGui::End();
@@ -473,9 +428,9 @@ void Game::WipeAllTileColliders()
 }
 
 
-void Game::AddTileColliderAt(Vector2 pos)
+void Game::AddTileColliderAt(Vector2 pos, Vector2 scale)
 {
-    fw::RectangleCollider* c = new fw::RectangleCollider(m_MapRoot, Vector2(0.85f), pos, m_pActiveCamera, GetDebugShader(), false);
+    fw::RectangleCollider* c = new fw::RectangleCollider(m_MapRoot, scale, pos, m_pActiveCamera, GetDebugShader(), false);
     m_TileColliders.push_back(c);
 
 }

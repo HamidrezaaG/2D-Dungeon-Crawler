@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../Framework/Source/Utility/Color.h"
-//#include "../../Framework/Source/Objects/Camera.h"
 
 const char k_Controls_UP = 'W';
 const char k_Controls_LEFT = 'A';
@@ -48,4 +47,3 @@ const float k_Camera_ZoomSpeed = 10.0f;
 const float k_Camera_ZoomStep = 0.1f;
 const float k_Camera_MaxZoom = 2.0f;
 const float k_Camera_MinZoom = 0.1f;
-

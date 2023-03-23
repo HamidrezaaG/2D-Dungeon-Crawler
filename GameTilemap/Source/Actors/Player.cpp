@@ -10,7 +10,7 @@ m_pSpriteSheet(nullptr)
     m_pController = _pcontroller;
 
     //m_pCollider = new fw::RectangleCollider(this, Vector2(1,0.5f), Vector2(0,0), m_pActiveCamera, _pgame->GetDebugShader(), true);
-    m_pCollider = new fw::CircleCollider(this, 0.25f, m_pActiveCamera, _pgame->GetDebugShader(), Vector2(0), true);
+    m_pCollider = new fw::CircleCollider(this, 0.35, m_pActiveCamera, _pgame->GetDebugShader(), Vector2(0), true);
     m_pCollider->Enable();
 
     m_CurrentAnimation = k_Animation::Idle;

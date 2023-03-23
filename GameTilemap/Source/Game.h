@@ -31,7 +31,7 @@ public:
     //void Load(Layout* _layout);
 
     void WipeAllTileColliders();
-    void AddTileColliderAt(Vector2 pos);
+    void AddTileColliderAt(Vector2 pos, Vector2 scale);
     void AddObject(Vector2 _where, Vector2 _scale, fw::Texture* _texture, fw::SpriteSheet* _spritesheet, fw::SpriteSheet::SpriteInfo* _spriteinfo, fw::k_ObjectType objectType, std::string name);
 
 protected:

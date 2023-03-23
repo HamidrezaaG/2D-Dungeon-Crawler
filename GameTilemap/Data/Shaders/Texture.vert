@@ -39,10 +39,10 @@ void main()
     pos -= u_CameraPos;
 
     pos *= u_CameraZoom;
-    pos.x /= u_WorldAspect;
     pos += u_CameraDimensions * (1-u_CameraZoom) * 0.5;
 
     pos /= u_WorldScale;    // apply world scale
+    pos.x /= u_WorldAspect;
     pos -= 1; // 0 to bottom left corner
     ////pos *= abs(sin(u_Time));
     ////gl_Position = vec4( sin(pos*3.141592), 0, 1 );

@@ -4,8 +4,6 @@ namespace fw {
 
     Camera::Camera(Vector2 _position, Vector2 _dimensions, float _zoom) : m_Position(_position), m_Dimensions(_dimensions), m_CameraZoom(_zoom) {}
 
-
-
     Vector2 Camera::GetDimensions()
     {
         return m_Dimensions;
@@ -19,6 +17,7 @@ namespace fw {
     {
         return m_Position;
     }
+
     void Camera::SetPosition(Vector2 _position)
     {
         m_Position = _position;
@@ -37,8 +36,9 @@ namespace fw {
     {
         return m_Position + m_Dimensions * 0.5f;
     }
+
     void Camera::SetCorrectedPosition(Vector2 _position)
     {
-        m_Position = _position - m_Dimensions * 0.5f - Vector2(0.5f, 0);
+        m_Position = _position - m_Dimensions * 0.5f - Vector2(0.5, 0) * k_World_Scale;
     }
 }

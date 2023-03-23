@@ -67,8 +67,8 @@ void TileMap::LoadLayout(const Layout* _pLayout)
 
         bool TileHasCollider = properties.HasCollider;
         bool TileHasFlooring = properties.HasFloorUnderneath;
-        Vector2 pos = m_Offset + Vector2(col * m_ScaleAdjustment.x,
-                                         row * m_ScaleAdjustment.y);
+        Vector2 pos = m_Offset + Vector2(col * m_Scale.x,
+                                         row * m_Scale.y);
         std::string spriteName = properties.SpriteName;
         std::string WallFlagString = "_";
         unsigned char ScanFlags = 0;
@@ -301,7 +301,7 @@ void TileMap::LoadLayout(const Layout* _pLayout)
         {
             if (properties.HasCollider)
             {
-                m_pGame->AddTileColliderAt(pos + Vector2(0.5f));
+                m_pGame->AddTileColliderAt(pos + m_Scale * 0.5f, m_Scale);
             }
 
             DrawData* d = new DrawData(pos, m_pLayout->m_LevelData[i], m_pSpriteSheet->Sprites[spriteName], pfloorSprite, properties.Color);
@@ -585,8 +585,6 @@ void TileMap::SetTexture(fw::Texture* _texture)
 void TileMap::SetScale(Vector2 _scale)
 {
     m_Scale = _scale;
-    m_Scale.x *= fw::k_Window_Aspect;
-    m_ScaleAdjustment = Vector2(m_Scale.x * m_pSpriteSheet->SpriteSize.x / fw::k_Window_Dimensions.x, m_Scale.y * m_pSpriteSheet->SpriteSize.y / fw::k_Window_Dimensions.y) * fw::k_World_Scale;
 }
 
 TileMap::~TileMap()
@@ -618,13 +616,13 @@ Vector2 TileMap::ToWorldSpace(IVector2 _gridSpace)
 
 Vector2 TileMap::ToWorldSpace(int col, int row)
 {
-    return m_Offset + Vector2(col * m_ScaleAdjustment.x, row * m_ScaleAdjustment.y) + m_ScaleAdjustment * 0.5f;
+    return m_Offset + Vector2(col * m_Scale.x, row * m_Scale.y) + m_Scale * 0.5f;
 }
 
 IVector2 TileMap::ToGridSpace(Vector2 _worldSpace)
 {
     Vector2 input = _worldSpace - m_Offset;
-    input.x /= m_ScaleAdjustment.x;
-    input.y /= m_ScaleAdjustment.y;
+    input.x /= m_Scale.x;
+    input.y /= m_Scale.y;
     return IVector2((int)floor(input.x), (int)floor(input.y));
 }

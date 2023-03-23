@@ -110,8 +110,13 @@ int FWCore::Run(GameCore* pGame)
         {
             
             double currentTime = GetSystemTimeSinceGameStart();
-            
             double deltaTime = currentTime - previousTime;
+
+            if (deltaTime > 0.5f)
+            {
+                deltaTime = 0.1f;
+            }
+
             previousTime = currentTime;
 
             pGame->Update((float)deltaTime);
