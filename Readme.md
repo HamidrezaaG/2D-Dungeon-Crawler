@@ -11,7 +11,7 @@
 	<br>
 </ul>
 
-<div align="center"><a href="http://www.youtube.com/watch?v=AlJqBda12tc"><img src="https://drive.google.com/uc?export=view&id=1FUNKGmx2TZT8PgescX1WkVNvwU9uXMHm" width="50%"><img></a></div>
+<div align="center"><a href="http://www.youtube.com/watch?v=AlJqBda12tc"><img src="https://drive.google.com/uc?export=view&id=1FUNKGmx2TZT8PgescX1WkVNvwU9uXMHm" width="75%"><img></a></div>
 
 <h2><strong>FEATURES</strong></h2>
 
